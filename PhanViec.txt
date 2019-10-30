@@ -1,1 +1,5 @@
-Phân công nhiệm vụ
+Phân công nhiệm vụ:
+	Huy code trang chủ, 
+	Sơn code trang tìm kiếm, 
+	Hạnh code trang chi tiết tour với booking,
+	Long code trang tra đơn.
