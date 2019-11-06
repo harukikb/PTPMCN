@@ -6729,3 +6729,8 @@ only screen and (min-device-pixel-ratio: 2) and (max-width: 991px) {
 #error-message{
 	color:red;
 }
+
+.check{
+	padding-top: 30px !important ; 
+	padding-bottom: 15px !important ; 
+}

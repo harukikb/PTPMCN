@@ -39,7 +39,7 @@
                         </ul>
                     </li>
                     <li class="submenu">
-                        <a href="<?php echo base_url(); ?>" class="show-submenu">Tra đơn đặt tour</a>
+                        <a href="<?php echo base_url(); ?>check" class="show-submenu">Tra đơn đặt tour</a>
                     </li>
                     <li>
                         <a href="javascript:void(0);" class="show-submenu">FanTour<i class="icon-down-open-mini"></i></a>
