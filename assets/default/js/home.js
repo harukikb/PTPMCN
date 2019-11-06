@@ -81,3 +81,114 @@ var tpj = jQuery;
         });
       }
     });
+
+    
+$(function() {
+  get_list_tours();
+});
+
+    async function get_list_tours(data) {
+      let result;
+        let url = base_url+"/index/get_list_tours";
+        let success = function(responce) {
+          let json_data = $.parseJSON(responce);
+          show_list_tours_grid(json_data);
+        };
+        try {
+        result = await $.get(url, data, success);
+      }
+      catch (error) {
+            console.error(error);
+        }
+    }
+
+    function show_list_tours_grid(data){
+      let list = $('#list_tour_list');
+      list.empty();
+      if(data['total_record']==0){
+        list.append("<p class='noti-filter__result'><strong>Không có dữ liệu</strong></p>");
+      }else{
+        
+        for (let i = 0; i < data['total_record']/3; i++) {
+          let row=$('<div class="row"></div>');
+          //post1 in row
+          for( let j=0;j<=2;j++){
+            if(data[3*i+j]!=null){
+              let col_4=$('<div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.1s"></div>');
+              let container=$('<div class="tour_container"></div>');
+              if(data[3*i+j].tour_label!=null){
+                if(data[3*i+j].tour_label=="phổ biến"){
+                  container.append('<div class="ribbon_3 popular"><span>'+data[3*i+j].tour_label+'</span></div>');
+                }else{
+                  container.append('<div class="ribbon_3"><span>'+data[3*i+j].tour_label+'</span></div>');
+                }
+              }
+
+              let img_container=$('<div class="img_container"></div>');
+                let a=$('<a href="'+base_url+'/tour/detail/'+data[3*i+j].tour_slug+'"></a>');
+                a.append('<img src="'+data[3*i+j].tour_thumnail+'" width="800" height="533" class="img-fluid" alt="'+data[3*i+j].tour_name+'">');
+                if(data[3*i+j].tour_price!=null&&data[3*i+j].tour_saving_price!=null){
+                  let price=Math.round(((data[3*i+j].tour_price-data[3*i+j].tour_saving_price)/data[3*i+j].tour_price)*100);
+                  if(price>5){
+                    a.append('<div class="badge_save">Giảm<strong>'+price+'%</strong></div>');
+                  }
+                }
+              
+                a.append('<div class="short_info">'+
+                            '<i class="icon-calendar"></i>'+data[3*i+j].tour_duration+'<span class="price">'+format_curency(data[3*i+j].tour_saving_price)+'<sup>đ</sup></span>'+
+                          '</div>');
+              img_container.append(a);
+              container.append(img_container);
+              let tour_title=$('<div class="tour_title"></div>');
+              tour_title.append('<h3><strong>'+data[3*i+j].tour_name+'</h3>');
+              let vote="";
+              for(let j=0;j<5;j++){
+                if(data[i].avg_rev>j)
+                  vote+='<i class="icon-smile voted"></i>';
+                else
+                  vote+='<i class="icon-smile"></i>';
+              }
+              tour_title.append('<div class="rating">'+vote+'<small>('+data[3*i+j].num_rev+')</small></div>');
+              tour_title.append('<div class="wishlist">'+
+                          '<a class="tooltip_flip tooltip-effect-1" href="#">+<span class="tooltip-content-flip">'+
+                          '<span class="tooltip-back">Add to wishlist</span>'+
+                          '</span></a>'+
+                        '</div>');
+              container.append(tour_title);
+              col_4.append(container);
+              row.append(col_4);
+            }
+            
+          }
+          list.append(row);
+        }
+      }
+    }
+    
+
+  //   <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+  //   <div class="tour_container">
+  //     <div class="ribbon_3 popular"><span>Popular</span></div>
+  //     <div class="img_container">
+  //       <a href="<?php echo base_url(); ?>tour/detail/abc">
+  //         <img src="<?php echo base_url(); ?>assets/default/img/tour_box_3.jpg" width="800" height="533" class="img-fluid" alt="image">
+  //         <div class="badge_save">Save<strong>30%</strong></div>
+  //         <div class="short_info">
+  //           <i class="icon_set_1_icon-44"></i>Historic Buildings<span class="price"><sup>$</sup>48</span>
+  //         </div>
+  //       </a>
+  //     </div>
+  //     <div class="tour_title">
+  //       <h3><strong>Versailles</strong> tour</h3>
+  //       <div class="rating">
+  //         <i class="icon-smile voted"></i><i class="icon-smile voted"></i><i class="icon-smile voted"></i><i class="icon-smile voted"></i><i class="icon-smile"></i><small>(75)</small>
+  //       </div>
+  //       <!-- end rating -->
+  //       <div class="wishlist">
+  //         <a class="tooltip_flip tooltip-effect-1" href="javascript:void(0);">+<span class="tooltip-content-flip"><span class="tooltip-back">Add to wishlist</span></span></a>
+  //       </div>
+  //       <!-- End wish list-->
+  //     </div>
+  //   </div>
+  //   <!-- End box tour -->
+  // </div>

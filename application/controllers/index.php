@@ -11,7 +11,6 @@ class Index extends CI_Controller {
 
 	public function index()
 	{
-        //$this -> data['after_header'] = "default/slide"; 
         $this -> data['custom_css'] = array(
         "assets/default/rev-slider-files/fonts/font-awesome/css/font-awesome.css",
         "assets/default/rev-slider-files/css/settings.css"
@@ -32,12 +31,12 @@ class Index extends CI_Controller {
             "assets/default/js/notify_func.js");
         $this->load->view("default/template",$this ->data);
     }
-    public function get_list_tour_from(){
-        $this->load->model("tours_model");
-        echo json_encode($this->tours_model->get_list_tour_from());
+    public function get_list_tours(){
+        $this->load->model("home_model");
+        $arr=$this->home_model->getListTour();
+        //đếm số lượng ds bài post lấy đc
+        $arr['total_record']=count($arr);
+        echo json_encode($arr);
     }
-    public function get_list_tour_destination(){
-        $this->load->model("tours_model");
-        echo json_encode($this->tours_model->get_list_tour_destination());
-    }
+    
 }

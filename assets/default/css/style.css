@@ -77,7 +77,7 @@ h1, h2, h3 {margin-top: 20px;margin-bottom: 10px;}
 
 .main_title {text-align:center; font-size:16px; margin-bottom:30px;}
 .main_title h2 {text-transform: uppercase; font-weight:700; letter-spacing:-1px; font-size:30px; margin-bottom:0;margin-top:0; }
-.main_title p {font-family:"Lato",Arial, sans-serif; font-weight:300; font-size:20px}
+.main_title p {font-family:'Dancing Script', cursive; font-weight:300; font-size:20px}
 
 h2 span, h3 span, h4 span, h5 span, h6 span{color:#e04f67;}
 

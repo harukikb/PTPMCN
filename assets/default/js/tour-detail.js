@@ -130,7 +130,7 @@ async function submit_booking_form(data){
     let success = function(responce) {
 		let json_data = $.parseJSON(responce);
 		if(json_data['status']){
-			window.location.href = base_url+"/tour/cart";
+			window.location.href = base_url+"/tour/payment";
 		}	
 		else
 			$('#error-message').text(json_data['message']);
