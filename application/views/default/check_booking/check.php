@@ -27,7 +27,7 @@
         <aside class="col-lg-12">
             <div class="theiaStickySidebar check">
                 <div class="box_style_1 expose" id="booking_box">
-                    
+
                     <div class="row">
                         <div class="col-sm-8">
                             <div class="form-group">
@@ -45,94 +45,70 @@
                 <!--/sticky -->
 
         </aside>
-        <p id="error-message"></p>
+        <p id="error-message">
+            
+        </p>
 
-        <aside class="col-lg-12" id="sidebar">
-					<div class="theiaStickySidebar">
-						<div class="box_style_1 expose" id="booking_box">
-							<h3 class="inner">- Booking -</h3>
-							<p id="error-message"></p>
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label><i class="icon-calendar-7"></i> Chọn ngày đi<img src="" alt="" sizes="" srcset=""></label>
-										<input class="date-pick form-control" data-date-format="dd/mm/yyyy" type="text" id="date_start">
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label><i class=" icon-clock"></i> Thời gian</label>
-										<input class="time-pick form-control" value="12:00 AM" type="text" id="time_start">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-6">
-									<div class="form-group">
-										<label>Người lớn</label>
-										<div class="numbers-row">
-											<input type="text" value="1" id="adults" class="qty2 form-control" name="num_adults">
-										</div>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="form-group">
-										<label>Trẻ em</label>
-										<div class="numbers-row">
-											<input type="text" value="0" id="childrens" class="qty2 form-control" name="num_childrens">
-										</div>
-									</div>
-								</div>
-								
-							</div>
-							<div class="row">
-								<div class="col-6">
-									<div class="form-group">
-										<label>Trẻ nhỏ</label>
-										<div class="numbers-row">
-											<input type="text" value="0" id="childs" class="qty2 form-control" name="num_childs">
-										</div>
-									</div>
-								</div>
-							</div>
-							<br>
-							<table class="table table_summary">
-								<tbody>
-									<tr>
-										<td>
-											Người lớn
-										</td>
-										
-									</tr>
-									<tr>
-										<td>
-											Trẻ em
-										</td>
-										
-									</tr>
-									<tr>
-										<td>
-											Trẻ con
-										</td>
-										
-									</tr>
-									
-									<tr class="total">
-										<td>
-											Tổng tiền
-										</td>
-										
-									</tr>
-								</tbody>
-							</table>
-							<a class="btn_full" href="cart" id="btn_booking">Book now</a>
-							<a class="btn_full_outline" href="#"><i class=" icon-heart"></i> Add to whislist</a>
-						</div>
-						<!--/box_style_1 -->
-					</div>
-					<!--/sticky -->
+        <hr>
+		<div id="list_check_booking" style="padding-bottom: 10px;">
 
-				</aside>
+        </div>
+       	
+        <!-- <aside class="col-lg-12" id="sidebar">
+            <div class="theiaStickySidebar">
+                <div class="box_style_1 expose" id="booking_box">
+                    <h3 class="inner">Mã đơn đặt:</h3>
+                    <br>
+                    <table class="table table_summary">
+                        <tbody class="text-center">
+                            <tr>
+                                <td class="check_table">
+                                    Người đặt
+                                </td>
+                                <td>
+                                    ahihi <br>
+                                    sdt
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="check_table">
+                                    tour
+                                </td>
+                                <td>
+                                    <a href="<?php echo base_url(); ?>">Home</a> <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="check_table">
+                                    số người
+                                </td>
+                                <td>
+                                    6
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="check_table">
+                                    tổng tiền
+                                </td>
+                                <td>
+                                    453653647
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="check_table">
+                                    Lưu ý
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+               
+            </div>
+
+        </aside> -->
 
     </div>
 

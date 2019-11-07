@@ -11,7 +11,7 @@ class Check extends CI_Controller {
 	public function index()
 	{
         $this -> data['title'] = "Tra đơn đặt tour";  
-        //$this -> data['slide'] = "default/check_booking/header_check"; 
+        
         $this -> data['temp'] = "default/check_booking/check";
         
         $this -> data['after_header'] = "default/check_booking/header_check"; 
@@ -45,8 +45,8 @@ class Check extends CI_Controller {
 
     public function check_booking(){
         $this->load->model("check_model");
-        $keyword=$this->input->get('keyword');
-        $result=$this->db->model->check_booking($keyword);
+        $keyword=$this->input->post('keyword',true);
+        $arr=$this->check_model->check_booking($keyword);
         $arr['total_record']=count($arr);
         echo json_encode($arr);
     }
