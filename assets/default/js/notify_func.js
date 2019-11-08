@@ -3,13 +3,13 @@
 $.notify({
 	// options
 	icon: 'icon_set_1_icon-29',
-	title: "<h4>Welcome Traveller</h4> ",
-	message: "Epicuri vituperata complectitur in quo, primis labore possim sed in, vim no elaboraret reprehendunt. "
+	title: "<h4>Welcome to B1 TEAM</h4> ",
+	message: " "
 },{
 	// settings
 	type: 'info',
 	delay: 5000,
-	timer: 3000,
+	timer: 5000,
 	z_index: 9999,
 	showProgressbar: false,
 	placement: {
@@ -23,7 +23,7 @@ $.notify({
 });
  }, 1000); // change the start delay
  
-setTimeout(function() {
+/*setTimeout(function() {
 $.notify({
 	// options
 	icon: './assets/default/img/notify_img.jpg',
@@ -47,6 +47,5 @@ $.notify({
 	},
 });
  }, 5000); // change the start delay
- 
-
+ */
  });

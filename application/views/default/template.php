@@ -19,6 +19,7 @@
 
     <!-- GOOGLE WEB FONT -->
   <link href="https://fonts.googleapis.com/css?family=Gochi+Hand|Lato:300,400|Montserrat:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Dancing+Script&display=swap" rel="stylesheet">
 
     <!-- COMMON CSS -->
   <link href="<?php echo base_url(); ?>assets/default/css/bootstrap.min.css" rel="stylesheet">
