@@ -177,7 +177,7 @@
       <!-- End row -->
       
       <p class="text-center add_bottom_30">
-        <a href="tour" class="btn_1 medium"><i class="icon-eye-7"></i>View all tours (144) </a>
+        <a href="tour" class="btn_1 medium"><i class="icon-eye-7"></i>Xem tất cả các tour</a>
       </p>
       
     </div>

@@ -4,9 +4,20 @@ $(function() {
 		   checkboxClass: 'icheckbox_square-grey',
 		   radioClass: 'iradio_square-grey'
 		 });
-    get_list_tours();
+	get_list_tours();
 });
 $( document ).ready(function() {
+
+	//sự kiện click vào icon tìm kiếm
+	$('#something').on('click',function(e){
+		let value=$('#q').val();
+		// if(value!=""){
+		// 	add_query_string_filter('keysearch',value);
+		// }
+		// e.preventDefault();
+		// window.location="http://localhost:8080/PTPMCN/tour";
+		
+	});
 
 	
 	//sự kiện chọn thứ tự hiển thị theo giá
@@ -92,33 +103,7 @@ $( document ).ready(function() {
         $('span.filter-item').has('a[data-type=rating][data-id='+id+']').remove();
 		remove_query_string_filter('rating', id);
 	});
-	//convenient
-	$(document).on('ifChecked','.filter-convenient',function(e){
-    	let id= $(this).data('id');
-	    let content="";
-    	
-	    switch(id){
-	    		case 1:
-	    			content="Điều hòa";
-	    			break;
-	    		case 2:
-	    			content="WiFi";
-	    			break;
-	    		
-	    }
-	    add_filter_items('rating',id,content);
-    	//thêm query string vào input hidden filter
-    	add_query_string_filter('rating',id);
-    	
-    	
-	});
-	//Su kien uncheck checkbox convenient
-    $(document).on('ifUnchecked','.filter-convenient',function(e){
-    	e.preventDefault();
-    	let id= $(this).data('id');
-        $('span.filter-item').has('a[data-type=rating][data-id='+id+']').remove();
-		remove_query_string_filter('rating', id);
-	});
+	
 
     
 });
@@ -174,8 +159,14 @@ function get_parameter(name){
 //loaddata
 async function get_list_tours(data) {
 	let result;
-	
-    let url = base_url+"/tour/get_list_tour";
+	let keysearch=$('#q').val();
+	let url;
+	if (keysearch!=""){
+		url = base_url+"/tour/get_list_tour_key";
+	}
+	else{
+		url = base_url+"/tour/get_list_tour";
+	}
     let success = function(responce) {
 		let json_data = $.parseJSON(responce);
 		if(get_parameter('view')==2){
@@ -452,7 +443,10 @@ function get_list_query()
 					break;
 				case "orderby":
     				data.orderby=value;
-    				break;
+					break;
+				// case "keysearch":
+				// 	data.keysearch=value;
+				// 	break;
     			
     		}
     			

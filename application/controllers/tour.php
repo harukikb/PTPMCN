@@ -44,9 +44,44 @@ class Tour extends CI_Controller {
         //import javascript external
         $this -> data['custom_js_external'] = array(
             "https://maps.googleapis.com/maps/api/js");
+
+        //get catelogy tour
+        $this->load->model("tours_model");
+        $cate_tour=$this->tours_model->getListCate();
+        $this->data['cate_tour']=$cate_tour;
         
+        //tổng số lượng tour
+        $all_tour=$this->tours_model->all_tour();
+        $this->data['all_tour']=$all_tour;
+
+
+        // $key=$this->input->get('q');
+        // $this->data['keysearch']=$key;
+        // $data_tour=$this->tours_model->search_icon($key);
+        // $this->data['data_tour']=$data_tour;
+
         //load master page
         $this->load->view("default/template",$this ->data);
+
+        
+        
+    }
+
+
+    //controller icon search header
+    public function get_list_tour_key(){
+        $this->load->model("tours_model");
+        $key=$this->input->get('q');
+        
+        //$key="Nẵng";
+        $arr=$this->tours_model->getListHaveKey($key);
+        //echo $this->db->last_query();
+        //đếm số lượng ds bài post lấy đc
+        $arr['total_record']=3;
+        $arr['tours_count']=3;
+        $arr['page_size']=$this->page_size;
+        
+        echo json_encode($arr);
         
     }
 
@@ -131,8 +166,10 @@ class Tour extends CI_Controller {
 
     public function get_list_tour(){
         $this->load->model("tours_model");
+
+        
+
         $category=$this->input->get('category');
-        //echo $category;
         $rating=$this->input->get('rating');
         $minprice=((int)$this->input->get('minprice'))*1000;
         $maxprice=((int)$this->input->get('maxprice'))*1000;

@@ -6,6 +6,28 @@ class Tours_model extends CI_Model
 		return $result->row();
     }
 
+    //search theo icon trên header
+    public function getListHaveKey($keysearch){
+        //join cột điểm trung bình review của tour
+        $sql_avg_star="(Select ROUND(AVG(rev_star),0) as avg_rev,tour_id from review_tour GROUP BY review_tour.tour_id UNION SELECT tours.tour_price=0 as avg_rev,tour_id FROM tours where tours.tour_id not in (select tour_id from (Select tour_id from review_tour GROUP BY review_tour.tour_id) as temp)) as rev_tbl";
+        $this->db->join($sql_avg_star,'rev_tbl.tour_id=tours.tour_id');
+
+        //join cột tổng số lượng review của tour
+        $sql_num_rev="(Select count(review_tour.tour_id) as num_rev,tour_id from review_tour GROUP BY review_tour.tour_id UNION SELECT tours.tour_price=0 as avg_rev,tour_id FROM tours where tours.tour_id not in (select tour_id from (Select tour_id from review_tour GROUP BY review_tour.tour_id) as temp)) as revs_num";
+        $this->db->join($sql_num_rev,'revs_num.tour_id=tours.tour_id');
+
+        //$query = $this->db->query("SELECT * FROM `tours` WHERE `tour_destination` like '%$keysearch%'");
+        $this->db->or_where("`tour_destination` like '%$keysearch%'");
+        $query=$this->db->get("tours");
+		return $query->result_array();
+    }
+
+    //tổng tour
+    public function all_tour(){
+        $query=$this->db->query("SELECT COUNT(`tour_id`) as `count` FROM `tours`");
+        return $query->row();
+    }
+
     //để lấy tour liên quan cho trang chi tiết nhà hàng
     public function get_info_tour_in_res_detail($cate_res)
     {
@@ -65,6 +87,12 @@ class Tours_model extends CI_Model
 
     public function getListHaveFilter($category,$rating,$minprice,$maxprice,$orderby,$page,$page_size)
     {
+
+        //lọc bài viết theo keysearch
+        // if ($keysearch!=null){
+        //     $this->db->or_where("`tour_destination` like '%$keysearch%'");
+        // }
+
         //$this->db->start_cache();
         //lọc bài viết theo category 
         if($category!=NULL){
@@ -87,14 +115,14 @@ class Tours_model extends CI_Model
         }
         //lọc bài viết theo giá tour
         if($minprice!=NULL){
-            $where="(tour_saving_price >=$minprice or tour_price >=$minprice)";
+            $where="(tour_saving_price >=$minprice)";
             //$this->db->where('tour_saving_price >=',$minprice);
             //$this->db->or_where('tour_price >=',$minprice);
             $this->db->where($where);
         }
             
         if($maxprice!=NULL){
-            $where="(tour_saving_price <=$maxprice or tour_price <=$maxprice)";
+            $where="(tour_saving_price <=$maxprice)";
             //$this->db->where('tour_saving_price <=',$maxprice);
             //$this->db->or_where('tour_price <=',$maxprice);
             $this->db->where($where);
@@ -226,8 +254,13 @@ class Tours_model extends CI_Model
         return $query->result_array();
     }
 
+
+    //update 11/4/2019
     public function getListCate()
     {
+        
+        $sql="(SELECT COUNT(`list_category_tour`.`category_tour_id`) as `num_cate`,`category_tour_id` FROM `list_category_tour` GROUP BY `list_category_tour`.`category_tour_id`) as `num_cate`";
+        $this->db->join($sql,'category_tour.cate_id=num_cate.category_tour_id');
         $query=$this->db->get("category_tour");
         return $query->result_array();
     }

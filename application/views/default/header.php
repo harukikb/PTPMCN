@@ -2,11 +2,11 @@
     <div id="top_line">
         <div class="container">
             <div class="row">
-                <div class="col-6"><i class="icon-phone"></i><strong>0045 043204434</strong></div>
+                <div class="col-6"><i class="icon-phone"></i><strong>0399002999</strong></div>
                 <div class="col-6">
                     <ul id="top_links">
-                        <li><a href="#sign-in-dialog" id="access_link">Sign in</a></li>
-                        <li><a href="wishlist.html" id="wishlist_link">Wishlist</a></li>
+                        <li><a href="#sign-in-dialog" id="access_link">Đăng nhập</a></li>
+                        <!--<li><a href="wishlist.html" id="wishlist_link">Wishlist</a></li>-->
                     </ul>
                 </div>
             </div><!-- End row -->
@@ -110,9 +110,9 @@
 <!-- Search Menu -->
 <div class="search-overlay-menu">
     <span class="search-overlay-close"><i class="icon_set_1_icon-77"></i></span>
-    <form role="search" id="searchform" method="get">
-      <input value="" name="q" type="search" placeholder="Search..." />
-      <button type="submit"><i class="icon_set_1_icon-78"></i>
+    <form role="search" id="searchform" action="<?php echo base_url(); ?>tour" method="get">
+      <input id="searchbox" value="" name="q" type="search" placeholder="Search..." />
+      <button id="something" type="submit"><i class="icon_set_1_icon-78"></i>
       </button>
   </form>
 </div>
