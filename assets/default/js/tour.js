@@ -4,27 +4,34 @@ $(function() {
 		   checkboxClass: 'icheckbox_square-grey',
 		   radioClass: 'iradio_square-grey'
 		 });
-	get_list_tours();
+	if (get_parameter('q')==null){
+		get_list_tours();
+		
+	}
+	else {
+		get_list_tours_key(get_parameter('q'));
+	}
+	
+
+	
 });
 $( document ).ready(function() {
 
-	//sự kiện click vào icon tìm kiếm
-	$('#something').on('click',function(e){
-		let value=$('#q').val();
-		// if(value!=""){
-		// 	add_query_string_filter('keysearch',value);
-		// }
-		// e.preventDefault();
-		// window.location="http://localhost:8080/PTPMCN/tour";
-		
+	$('#active').on('click',function(e){
+		e.preventDefault();
+		$('#querystring_filter').val('');
+		$('span.filter-item').remove();
+		$('.filter-rating').iCheck('uncheck');	
+		get_list_tours();
 	});
 
-	
+
 	//sự kiện chọn thứ tự hiển thị theo giá
 	$('#sort_price').on('change',function(e){
 		let value=$(this).val();
 		if(value!=""){
 			add_query_string_filter('orderby',value);
+			
 		}
 		
 	});
@@ -37,7 +44,8 @@ $( document ).ready(function() {
 
     	add_filter_items('category',id,content);
     	//thêm query string vào input hidden filter
-    	add_query_string_filter('category',id);
+		add_query_string_filter('category',id);
+		add_query_string_filter('page',1);
     	
     });
 
@@ -50,7 +58,8 @@ $( document ).ready(function() {
     	add_filter_items('price',0,content);
     	//thêm query string vào input hidden filter
     	add_query_string_filter('maxprice',to);
-    	add_query_string_filter('minprice',from);
+		add_query_string_filter('minprice',from);
+		add_query_string_filter('page',1);
 
     });
 
@@ -92,7 +101,8 @@ $( document ).ready(function() {
 	    }
 	    add_filter_items('rating',id,content);
     	//thêm query string vào input hidden filter
-    	add_query_string_filter('rating',id);
+		add_query_string_filter('rating',id);
+		add_query_string_filter('page',1);
     	
     	
     });
@@ -108,6 +118,28 @@ $( document ).ready(function() {
     
 });
 
+async function get_list_tours_key(keysearch) {
+	let result;
+	let data= {keysearch:keysearch};
+	
+	let url = base_url+"/tour/get_list_tour_key";
+    let success = function(responce) {
+		let json_data = $.parseJSON(responce);
+		if(get_parameter('view')==2){
+			show_list_tours_grid(json_data);
+		}else{
+			show_list_tours(json_data);
+			
+		}
+        
+    };
+    try {
+		result = await $.get(url, data, success);
+	}
+	catch (error) {
+        console.error(error);
+    }
+}
 
 function add_filter_items(type,id, content){
 	let filter=$('#row-filter');
@@ -159,14 +191,8 @@ function get_parameter(name){
 //loaddata
 async function get_list_tours(data) {
 	let result;
-	let keysearch=$('#q').val();
-	let url;
-	if (keysearch!=""){
-		url = base_url+"/tour/get_list_tour_key";
-	}
-	else{
-		url = base_url+"/tour/get_list_tour";
-	}
+
+	let url = base_url+"/tour/get_list_tour";
     let success = function(responce) {
 		let json_data = $.parseJSON(responce);
 		if(get_parameter('view')==2){
@@ -358,8 +384,12 @@ function show_list_tours_grid(data){
 }
 
 function pagination(num_post,page_size){
-	let total_page=num_post/page_size;
-	if(num_post>page_size){
+	let total_page;
+	if (num_post%page_size==0){
+		total_page=num_post/page_size;
+	}
+	else total_page=num_post/page_size+0.5;
+	if(num_post>=page_size){
 		let nav= $('#pagination-list__post');
 		nav.empty();
 		let ul=$('<ul class="pagination justify-content-center"></ul>');
@@ -378,9 +408,11 @@ function pagination(num_post,page_size){
 		ul.append(previous);
 		let data=get_list_query();
 		let current_page=data.page==undefined?1: data.page;
+
+
 		
 		if(current_page==1){
-			for(let i=current_page;i<4;i++){
+			for(let i=1;i<=total_page;i++){
 				if(total_page<i) break;
 				else{
 					if(current_page==i){
@@ -392,7 +424,7 @@ function pagination(num_post,page_size){
 				}
 			}
 		}else{
-			for(let i=current_page-1;i<3;i++){
+			for(let i=1;i<=total_page;i++){
 				if(total_page<i) break;
 				else{
 					if(current_page==i){
@@ -444,9 +476,6 @@ function get_list_query()
 				case "orderby":
     				data.orderby=value;
 					break;
-				// case "keysearch":
-				// 	data.keysearch=value;
-				// 	break;
     			
     		}
     			

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tour extends CI_Controller {
     var $data = array();
-    var $page_size=6;
+    var $page_size=1;
     public function __construct(){
         parent::__construct();  
         $this->load->library("cart");
@@ -71,14 +71,14 @@ class Tour extends CI_Controller {
     //controller icon search header
     public function get_list_tour_key(){
         $this->load->model("tours_model");
-        $key=$this->input->get('q');
+        $key=$this->input->get('keysearch',true);
         
         //$key="Nẵng";
         $arr=$this->tours_model->getListHaveKey($key);
         //echo $this->db->last_query();
         //đếm số lượng ds bài post lấy đc
-        $arr['total_record']=3;
-        $arr['tours_count']=3;
+        $arr['total_record']=count($arr);
+        $arr['tours_count']=$this->tours_model->tours_count_key($key);
         $arr['page_size']=$this->page_size;
         
         echo json_encode($arr);
