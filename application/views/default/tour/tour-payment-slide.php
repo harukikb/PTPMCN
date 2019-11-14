@@ -1,18 +1,18 @@
 <section id="hero_2">
 		<div class="intro_title">
-			<h1>Place your order</h1>
+			<h1>ĐẶT TOUR</h1>
 			<div class="bs-wizard row">
 
 				<div class="col-4 bs-wizard-step complete">
-					<div class="text-center bs-wizard-stepnum">Your cart</div>
+					<div class="text-center bs-wizard-stepnum">Tour</div>
 					<div class="progress">
 						<div class="progress-bar"></div>
 					</div>
-					<a href="cart.html" class="bs-wizard-dot"></a>
+					<a href="<?php echo base_url(); ?>tour" class="bs-wizard-dot"></a>
 				</div>
 
 				<div class="col-4 bs-wizard-step active">
-					<div class="text-center bs-wizard-stepnum">Your details</div>
+					<div class="text-center bs-wizard-stepnum">Thông tin của bạn</div>
 					<div class="progress">
 						<div class="progress-bar"></div>
 					</div>
@@ -20,11 +20,11 @@
 				</div>
 
 				<div class="col-4 bs-wizard-step disabled">
-					<div class="text-center bs-wizard-stepnum">Finish!</div>
+					<div class="text-center bs-wizard-stepnum">Kết thúc!</div>
 					<div class="progress">
 						<div class="progress-bar"></div>
 					</div>
-					<a href="confirmation_fixed_sidebar.html" class="bs-wizard-dot"></a>
+					<a href="<?php echo base_url(); ?>tour/confirmation" class="bs-wizard-dot"></a>
 				</div>
 
 			</div>

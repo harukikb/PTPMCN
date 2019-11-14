@@ -141,6 +141,54 @@ class Tours_model extends CI_Model
         return $query->row();
     }
 
+    public function add_customer($name, $email, $phone, $address){
+        $data=array(
+            'cus_name'=>$name,
+            'cus_email'=>$email,
+            'cus_phone'=>$phone,
+            'cus_address'=>$address
+        );
+        $this->db->query('ALTER TABLE `customer` AUTO_INCREMENT=1');
+        //câu truy vấn insert
+        $this->db->insert('customer', $data);
+        $last_row = $this->db->order_by('cus_id',"desc")
+            ->limit(1)
+            ->get('customer')
+            ->row();
+        return $last_row->cus_id;
+    }
+
+    public function add_booking_tour($cus_id, $tour_id, $date_start, $num_adults, $num_childrens, $num_childs, $total_price, $booking_status, $booking_code){
+        $data=array(
+            'cus_id'=>$cus_id,
+            'tour_id'=>$tour_id,
+            'booking_start_date'=>$date_start,
+            'booking_num_adult'=>$num_adults,
+            'booking_num_children'=>$num_childrens,
+            'booking_num_child'=>$num_childs,
+            'booking_price'=>$total_price,
+            'booking_status'=>$booking_status,
+            'booking_code'=>$booking_code,
+            "created_at" => date('Y-m-d H:i:s')
+        );
+        $this->db->query('ALTER TABLE `booking_tour` AUTO_INCREMENT=1');
+        //câu truy vấn insert
+        $this->db->insert('booking_tour', $data);
+        $last_row = $this->db->order_by('booking_id',"desc")
+            ->limit(1)
+            ->get('booking_tour')
+            ->row();
+        return $last_row->booking_id;
+    }
+
+    public function get_booking_tour_info($booking_code){
+        $this->db->where('booking_code',$booking_code);
+        $this->db->join("customer",'customer.cus_id=booking_tour.cus_id');
+        $this->db->join("tours",'tours.tour_id=booking_tour.tour_id');
+        $result = $this->db->get("booking_tour");
+        return $result->row();
+    }
+
     public function add_review_tour($tour_id,$name_review,$date_get_tour,$email_review,$position_review,$guide_review,$price_review,$quality_review,$review_text){
         $rev_star=0;
         $i=0;

@@ -1,4 +1,4 @@
-	<section class="parallax-window" data-parallax="scroll" data-image-src="<?php echo $info_tour->tour_thumnail; ?>" data-natural-width="1400" data-natural-height="250" style="min-height: 250px;">
+	<section class="parallax-window" data-parallax="scroll" data-image-src="<?php echo $info_tour->tour_thumnail; ?>" data-natural-width="1400" data-natural-height="350" style="min-height: 350px;">
 		<div class="parallax-content-2">
 			<div class="container">
 				<div class="row">

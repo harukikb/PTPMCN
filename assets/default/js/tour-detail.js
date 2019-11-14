@@ -13,21 +13,6 @@ $('input').iCheck({
 		 });
 
 $(document).ready(function ($) {
-	$('#Img_carousel').sliderPro({
-				width: 960,
-				height: 500,
-				fade: true,
-				arrows: true,
-				buttons: false,
-				fullScreen: false,
-				smallSize: 500,
-				startSlide: 0,
-				mediumSize: 1000,
-				largeSize: 3000,
-				thumbnailArrows: true,
-				autoplay: false
-	});
-
 	//change value of booking form
 	$('input#adults').on('change',function(){
 		let num_adults=$(this).val();
@@ -74,7 +59,6 @@ $(document).ready(function ($) {
 		$('#error-message').empty();
 		let tour_id  = $('#tour_id').val();
 		let tour_name  = $('#tour_name').val();
-
 		let date_get_tour= new Date($('#date_start').datepicker('getDate'));
 		if(isNaN(date_get_tour)){
 			$('#error-message').text('Vui lòng chọn ngày đi...');
@@ -130,7 +114,9 @@ async function submit_booking_form(data){
     let success = function(responce) {
 		let json_data = $.parseJSON(responce);
 		if(json_data['status']){
-			window.location.href = base_url+"/tour/payment";
+			window.location.href = base_url+"/tour/payment?num_adults="+data.num_adults+"&num_childrens="
+			+data.num_childrens+"&num_childs="+data.num_childs+"&tour_id="+data.tour_id+"&date_start="
+			+data.date_start+"&tour_name="+data.tour_name;
 		}	
 		else
 			$('#error-message').text(json_data['message']);
