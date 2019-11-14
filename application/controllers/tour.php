@@ -194,6 +194,60 @@ class Tour extends CI_Controller {
         echo json_encode($arr);
     }
 
+    public function submit_booking_tour(){
+        $this->load->library("cart");
+        $result = array();
+
+        $tour_id  = $this->input->post('tour_id',TRUE);
+        $tour_name = $this->input->post('tour_name',TRUE);
+        $date_start  = $this->input->post('date_start',TRUE);
+        $time_start = $this->input->post('time_start',TRUE);
+        $num_adults = $this->input->post('num_adults',TRUE);
+        $num_childrens = $this->input->post('num_childrens',TRUE);
+        $num_childs = $this->input->post('num_childs',TRUE);
+        $price_adult=$this->input->post('price_adult',TRUE);
+        $price_children=$this->input->post('price_children',TRUE);
+        $price_child=$this->input->post('price_child',TRUE);
+        $data=array(
+            'id'      => $tour_id,
+            'qty'     => 1,
+            'price'   => $num_adults*$price_adult+$num_childrens*$price_children+$num_childs*$price_child,
+            'name'    => $tour_name,
+            'options' => array(
+                'tour_id' => $tour_id,
+                "date_start" => $date_start,
+                "time_start" => $time_start,
+                "num_adults" => $num_adults,
+                "num_childrens" => $num_childrens,
+                "num_childs" => $num_childs,
+                "price_adult" => $price_adult,
+                "price_children" => $price_children,
+                "price_child" => $price_child
+            )
+        );
+        
+        if($num_adults==0&&$num_childrens==0&&$num_childs==0){
+            $result['status'] = 0;
+            $result['message']="Vui lòng chọn số lượng người đi tour phù hợp!";
+            
+        }
+        else{
+            // Them san pham vao gio hang
+            if($this->cart->insert($data)){
+                $result['status'] = 1;
+                $result['message']="Success";
+            }else{
+                $result['status'] = 0;
+                $result['message']="Có lỗi xảy ra, vui lòng thử lại sau!";
+            }
+        }
+        
+        
+        
+
+        echo json_encode($result);
+    }
+
    public function submit_checkout_tour(){
         $result = array();
         $this->load->model("tours_model");
