@@ -16,8 +16,7 @@
 		<div id="map" class="map"></div>
 	</div>
 	<!-- End Map -->
-
-
+	
 	<div class="container margin_60">
 		<input type="hidden" name="querystring_filter" id="querystring_filter" value="">
 		<div class="row-filter" id="row-filter">
@@ -28,17 +27,12 @@
 			<aside class="col-lg-3">
 					<div class="box_style_cat">
 						<ul id="cat_nav">
-							<li><a href="#" id="active" class="filter_by_category" data-id="0"><i class="icon_set_1_icon-51"></i>All tours <span>(141)</span></a>
+							<li><a href="#" id="active" class="abc"><i class="icon_set_1_icon-51"></i>All tours <span>(<?php if ($all_tour->count!=null) echo $all_tour->count; ?>)</span></a>
 							</li>
-							<li><a href="#" class="filter_by_category" data-id="1" data-content="Quy Nhon"><i class="icon_set_1_icon-37"></i>Quy Nhon <span>(20)</span></a>
+							<?php foreach ($cate_tour as $item) {?>
+							<li><a href="#" class="filter_by_category" data-id="<?php echo $item['cate_id']; ?>" data-content="<?php echo $item['cate_name']; ?>"><i class="icon_set_1_icon-37"></i><?php echo $item['cate_name']; ?> <span>(<?php echo $item['num_cate']; ?>)</span></a>
 							</li>
-							<li><a href="#" class="filter_by_category" data-id="2" data-content="Phu Yen"><i class="icon_set_1_icon-37"></i>Phu Yen <span>(16)</span></a>
-							</li>
-							<li><a href="#" class="filter_by_category" data-id="3" data-content="Cu Lao Xanh"><i class="icon_set_1_icon-37"></i>Cu Lao Xanh <span>(12)</span></a>
-							</li>
-							<li><a href="#" class="filter_by_category" data-id="4" data-content="Eo Gio"><i class="icon_set_1_icon-37"></i>Eo Gio <span>(11)</span></a>
-							</li>
-							
+							<?php } ?>
 						</ul>
 					</div>
 
@@ -125,6 +119,10 @@
 				<div id="list_tour_list">
 				
 				</div>
+
+				<!--/hiển thị tour t1heo icon search -->
+				
+				
 				<hr>
 
 				<nav id="pagination-list__post" aria-label="Page navigation">
