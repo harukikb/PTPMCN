@@ -32,22 +32,13 @@
                         <a href="<?php echo base_url(); ?>" class="show-submenu">Home</a>
                     </li>
                     <li class="submenu">
-                        <a href="javascript:void(0);" class="show-submenu">Tours <i class="icon-down-open-mini"></i></a>
+                        <a href="javascript:void(0);" class="show-submenu">Tours</a>
                         <ul>
                             <li><a href="<?php echo base_url(); ?>tour/?view=1">All tours list</a></li>
-                            <li><a href="<?php echo base_url(); ?>tour/?view=2">All tours grid</a></li>
                         </ul>
                     </li>
                     <li class="submenu">
                         <a href="<?php echo base_url(); ?>check" class="show-submenu">Tra đơn đặt tour</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0);" class="show-submenu">FanTour<i class="icon-down-open-mini"></i></a>
-                        <ul>
-                            <li><a href="<?php echo base_url(); ?>about">About</a></li>
-                            <li><a href="<?php echo base_url(); ?>contact">Contact</a></li>
-                        </ul>
-                        
                     </li>
                 </ul>
                 </div><!-- End main-menu -->
