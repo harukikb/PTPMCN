@@ -32,10 +32,7 @@
                         <a href="<?php echo base_url(); ?>" class="show-submenu">Home</a>
                     </li>
                     <li class="submenu">
-                        <a href="javascript:void(0);" class="show-submenu">Tours</a>
-                        <ul>
-                            <li><a href="<?php echo base_url(); ?>tour/?view=1">All tours list</a></li>
-                        </ul>
+                        <a href="<?php echo base_url(); ?>tour/?view=1" class="show-submenu">Tours</a>
                     </li>
                     <li class="submenu">
                         <a href="<?php echo base_url(); ?>check" class="show-submenu">Tra đơn đặt tour</a>
