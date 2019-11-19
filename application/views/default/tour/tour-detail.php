@@ -35,7 +35,7 @@
 					<?php 
 					if($info_tour->album_tour!=NULL){ ?>
 					<div id="Img_carousel" class="slider-pro">
-						<div class="sp-slides">
+						<div class="sp-slides-container">
 							<?php
 							
 							$album_tour=explode("|",$info_tour->album_tour);
