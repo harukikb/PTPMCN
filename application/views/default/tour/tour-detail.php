@@ -270,7 +270,7 @@
 				<aside class="col-lg-4" id="sidebar">
 					<div class="theiaStickySidebar">
 						<div class="box_style_1 expose" id="booking_box">
-							<h3 class="inner">- Booking -</h3>
+							<h3 class="inner">- Đặt tour -</h3>
 							<input type="hidden" id="tour_id" value="<?php echo $info_tour->tour_id; ?>">
 							<input type="hidden" value="<?php echo $info_tour->tour_name; ?>" id="tour_name">
 							<p id="error-message"></p>
@@ -355,8 +355,7 @@
 									</tr>
 								</tbody>
 							</table>
-							<a class="btn_full" href="payment" id="btn_booking">Book now</a>
-							<a class="btn_full_outline" href="#"><i class=" icon-heart"></i> Add to whislist</a>
+							<a class="btn_full" href="payment" id="btn_booking">Đặt tour</a>
 						</div>
 						<!--/box_style_1 -->
 					</div>
