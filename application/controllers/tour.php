@@ -72,14 +72,16 @@ class Tour extends CI_Controller {
     public function get_list_tour_key(){
         $this->load->model("tours_model");
         $key=$this->input->get('keysearch',true);
-        
+        $page=$this->input->get('page',true);
+        if($page==NULL) $page=1;
         //$key="Nẵng";
-        $arr=$this->tours_model->getListHaveKey($key);
+        $arr=$this->tours_model->getListHaveKey($key,$page,$this->page_size);
         //echo $this->db->last_query();
         //đếm số lượng ds bài post lấy đc
         $arr['total_record']=count($arr);
         $arr['tours_count']=$this->tours_model->tours_count_key($key);
         $arr['page_size']=$this->page_size;
+        $arr['current_page']=$this->input->get('page',true);
         
         echo json_encode($arr);
         

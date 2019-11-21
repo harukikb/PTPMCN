@@ -7,7 +7,7 @@ class Tours_model extends CI_Model
     }
 
     //search theo icon trên header
-    public function getListHaveKey($keysearch){
+    public function getListHaveKey($keysearch,$page,$page_size){
         //join cột điểm trung bình review của tour
         $sql_avg_star="(Select ROUND(AVG(rev_star),0) as avg_rev,tour_id from review_tour GROUP BY review_tour.tour_id UNION SELECT tours.tour_price=0 as avg_rev,tour_id FROM tours where tours.tour_id not in (select tour_id from (Select tour_id from review_tour GROUP BY review_tour.tour_id) as temp)) as rev_tbl";
         $this->db->join($sql_avg_star,'rev_tbl.tour_id=tours.tour_id');
@@ -18,6 +18,7 @@ class Tours_model extends CI_Model
 
         //$query = $this->db->query("SELECT * FROM `tours` WHERE `tour_destination` like '%$keysearch%'");
         $this->db->or_where("`tour_destination` like '%$keysearch%' OR `tour_name` like '%$keysearch%' OR `tour_description` like '%$keysearch%'");
+        $this->db->limit($page_size,($page-1)*$page_size);
         $query=$this->db->get("tours");
 		return $query->result_array();
     }
