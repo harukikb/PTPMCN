@@ -2,7 +2,7 @@
 		<div id="position">
 			<div class="container">
 				<ul>
-					<li><a href="#">Home</a>
+					<li><a href="<?php echo base_url(); ?>">Home</a>
 					</li>
 					<li><a href="<?php echo base_url(); ?>tour">Tour</a>
 					</li>
@@ -35,7 +35,7 @@
 					<?php 
 					if($info_tour->album_tour!=NULL){ ?>
 					<div id="Img_carousel" class="slider-pro">
-						<div class="sp-slides">
+						<div class="sp-slides-container">
 							<?php
 							
 							$album_tour=explode("|",$info_tour->album_tour);
@@ -79,11 +79,7 @@
 							<h3>Lịch trình</h3>
 						</div>
 						<div class="col-lg-9">
-						<?php 
-						if($info_tour->start_date!=NULL){
-							$start_date = new DateTime($info_tour->start_date);
-							echo '<h4>Xuất phát: '.$start_date->format('d/m/Y').'</h4>';
-						}  ?>
+						
 						<?php echo $info_tour->tour_schedule;?>
 						</div>
 					</div>
@@ -270,7 +266,8 @@
 				<aside class="col-lg-4" id="sidebar">
 					<div class="theiaStickySidebar">
 						<div class="box_style_1 expose" id="booking_box">
-							<h3 class="inner">- Booking -</h3>
+							<h3 class="inner">- Đặt tour -</h3>
+							<input type="hidden" id="tour_id" value="<?php echo $info_tour->tour_id; ?>">
 							<input type="hidden" value="<?php echo $info_tour->tour_name; ?>" id="tour_name">
 							<p id="error-message"></p>
 							<div class="row">
@@ -354,8 +351,7 @@
 									</tr>
 								</tbody>
 							</table>
-							<a class="btn_full" href="cart" id="btn_booking">Book now</a>
-							<a class="btn_full_outline" href="#"><i class=" icon-heart"></i> Add to whislist</a>
+							<a class="btn_full" href="payment" id="btn_booking">Đặt tour</a>
 						</div>
 						<!--/box_style_1 -->
 					</div>

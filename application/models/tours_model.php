@@ -44,25 +44,25 @@ class Tours_model extends CI_Model
     }
 
     //để lấy tour liên quan cho trang chi tiết nhà hàng
-    public function get_info_tour_in_res_detail($cate_res)
-    {
-        if($cate_res!=null)
-        {
-            $cate_item="";
-            for($i=0; $i<count($cate_res); $i++){
-                if($i!=count($cate_res)-1){
-                $cate_item.=($cate_res[$i]->category_res_id).',';
-                }
-                else $cate_item.=$cate_res[$i]->category_res_id;
-            }
-                $query = $this->db->query("SELECT *
-                FROM `tours`
-                JOIN `list_category_tour` ON `list_category_tour`.`tour_id`=`tours`.`tour_id` 
-                WHERE category_tour_id in ($cate_item) GROUP BY `tours`.`tour_id`");
-                $this->db->join('list_category_tour','list_category_tour.tour_id=tours.tour_id');
-        }
-        return $query->result();
-    }
+    // public function get_info_tour_in_res_detail($cate_res)
+    // {
+    //     if($cate_res!=null)
+    //     {
+    //         $cate_item="";
+    //         for($i=0; $i<count($cate_res); $i++){
+    //             if($i!=count($cate_res)-1){
+    //             $cate_item.=($cate_res[$i]->category_res_id).',';
+    //             }
+    //             else $cate_item.=$cate_res[$i]->category_res_id;
+    //         }
+    //             $query = $this->db->query("SELECT *
+    //             FROM `tours`
+    //             JOIN `list_category_tour` ON `list_category_tour`.`tour_id`=`tours`.`tour_id` 
+    //             WHERE category_tour_id in ($cate_item) GROUP BY `tours`.`tour_id`");
+    //             $this->db->join('list_category_tour','list_category_tour.tour_id=tours.tour_id');
+    //     }
+    //     return $query->result();
+    // }
 
     public function get_tour_info_by_slug($tour_slug){
         
@@ -178,48 +178,96 @@ class Tours_model extends CI_Model
         return $query->row();
     }
 
-    public function add_review_tour($tour_id,$name_review,$date_get_tour,$email_review,$position_review,$guide_review,$price_review,$quality_review,$review_text){
-        $rev_star=0;
-        $i=0;
-        if($position_review!=0){
-            $rev_star+=$position_review;
-            $i++;
-        }
-        if($guide_review!=0){
-            $rev_star+=$guide_review;
-            $i++;
-        }
-        if($price_review!=0){
-            $rev_star+=$price_review;
-            $i++;
-        }
-        if($quality_review!=0){
-            $rev_star+=$quality_review;
-            $i++;
-        }
-
-        //số điểm đánh giá trung bình
-        $rev_star=round($rev_star/$i);
-
-        //dữ liệu để insert
-        $data = array(
-            'tour_id' => $tour_id ,
-            'rev_name' => $name_review,
-            'rev_email' => $email_review,
-            'date_get_tour' => $date_get_tour,
-            'rev_content' => $review_text,
-            'rev_quality' => $quality_review,
-            'rev_price' => $price_review,
-            'rev_guide' => $guide_review,
-            'rev_position' => $position_review,
-            'rev_star' => $rev_star
+    public function add_customer($name, $email, $phone, $address){
+        $data=array(
+            'cus_name'=>$name,
+            'cus_email'=>$email,
+            'cus_phone'=>$phone,
+            'cus_address'=>$address
         );
-        $this->db->query('ALTER TABLE `review_tour` AUTO_INCREMENT=1');
+        $this->db->query('ALTER TABLE `customer` AUTO_INCREMENT=1');
         //câu truy vấn insert
-        $this->db->insert('review_tour', $data);
-        
-        return TRUE;
+        $this->db->insert('customer', $data);
+        $last_row = $this->db->order_by('cus_id',"desc")
+            ->limit(1)
+            ->get('customer')
+            ->row();
+        return $last_row->cus_id;
     }
+
+    public function add_booking_tour($cus_id, $tour_id, $date_start, $num_adults, $num_childrens, $num_childs, $total_price, $booking_status, $booking_code){
+        $data=array(
+            'cus_id'=>$cus_id,
+            'tour_id'=>$tour_id,
+            'booking_start_date'=>$date_start,
+            'booking_num_adult'=>$num_adults,
+            'booking_num_children'=>$num_childrens,
+            'booking_num_child'=>$num_childs,
+            'booking_price'=>$total_price,
+            'booking_status'=>$booking_status,
+            'booking_code'=>$booking_code,
+            "created_at" => date('Y-m-d H:i:s')
+        );
+        $this->db->query('ALTER TABLE `booking_tour` AUTO_INCREMENT=1');
+        //câu truy vấn insert
+        $this->db->insert('booking_tour', $data);
+        $last_row = $this->db->order_by('booking_id',"desc")
+            ->limit(1)
+            ->get('booking_tour')
+            ->row();
+        return $last_row->booking_id;
+    }
+
+    public function get_booking_tour_info($booking_code){
+        $this->db->where('booking_code',$booking_code);
+        $this->db->join("customer",'customer.cus_id=booking_tour.cus_id');
+        $this->db->join("tours",'tours.tour_id=booking_tour.tour_id');
+        $result = $this->db->get("booking_tour");
+        return $result->row();
+    }
+
+    // public function add_review_tour($tour_id,$name_review,$date_get_tour,$email_review,$position_review,$guide_review,$price_review,$quality_review,$review_text){
+    //     $rev_star=0;
+    //     $i=0;
+    //     if($position_review!=0){
+    //         $rev_star+=$position_review;
+    //         $i++;
+    //     }
+    //     if($guide_review!=0){
+    //         $rev_star+=$guide_review;
+    //         $i++;
+    //     }
+    //     if($price_review!=0){
+    //         $rev_star+=$price_review;
+    //         $i++;
+    //     }
+    //     if($quality_review!=0){
+    //         $rev_star+=$quality_review;
+    //         $i++;
+    //     }
+
+    //     //số điểm đánh giá trung bình
+    //     $rev_star=round($rev_star/$i);
+
+    //     //dữ liệu để insert
+    //     $data = array(
+    //         'tour_id' => $tour_id ,
+    //         'rev_name' => $name_review,
+    //         'rev_email' => $email_review,
+    //         'date_get_tour' => $date_get_tour,
+    //         'rev_content' => $review_text,
+    //         'rev_quality' => $quality_review,
+    //         'rev_price' => $price_review,
+    //         'rev_guide' => $guide_review,
+    //         'rev_position' => $position_review,
+    //         'rev_star' => $rev_star
+    //     );
+    //     $this->db->query('ALTER TABLE `review_tour` AUTO_INCREMENT=1');
+    //     //câu truy vấn insert
+    //     $this->db->insert('review_tour', $data);
+        
+    //     return TRUE;
+    // }
 
     public function tours_count($category,$rating,$minprice,$maxprice)
     {
@@ -314,201 +362,201 @@ class Tours_model extends CI_Model
         return false;
     }
     
-    public function add_tour($tour_title,$category_tour_id,$tour_from,$tour_destination,$tour_duration,$tour_price,$tour_saving_price,$tour_thumnail,$album_tour,$tour_except,$tour_info_contact,$tour_keywords,$tour_description,$tour_schedule,$tour_slug)
-    {
-        $data=array(
-            "tour_name" => $tour_title,
-            "category_tour_id" => $category_tour_id,
-            "tour_from" => $tour_from,
-            "tour_destination" => $tour_destination,
-            "tour_duration" => $tour_duration,
-            "tour_price" => $tour_price,
-            "tour_saving_price" => $tour_saving_price,
-            "tour_thumnail" => $tour_thumnail,
-            "album_tour" => $album_tour,
-            "tour_except" => $tour_except,
-            "tour_info_contact" => $tour_info_contact,
-            "tour_keywords" => $tour_keywords,
-            "tour_description" => $tour_description,
-            "tour_schedule" => $tour_schedule,
-            "tour_slug" => $tour_slug,
-            "created_at" => date('Y-m-d H:i:s'),
-        );
-        $this->db->query('ALTER TABLE `tours` AUTO_INCREMENT=1');
-        if($this->db->insert("tours", $data))
-        {
-            //print_r($this->db->last_query());
-            return true;
-        }
-        //print_r($this->db->last_query());
-        return false;
-    }
+    // public function add_tour($tour_title,$category_tour_id,$tour_from,$tour_destination,$tour_duration,$tour_price,$tour_saving_price,$tour_thumnail,$album_tour,$tour_except,$tour_info_contact,$tour_keywords,$tour_description,$tour_schedule,$tour_slug)
+    // {
+    //     $data=array(
+    //         "tour_name" => $tour_title,
+    //         "category_tour_id" => $category_tour_id,
+    //         "tour_from" => $tour_from,
+    //         "tour_destination" => $tour_destination,
+    //         "tour_duration" => $tour_duration,
+    //         "tour_price" => $tour_price,
+    //         "tour_saving_price" => $tour_saving_price,
+    //         "tour_thumnail" => $tour_thumnail,
+    //         "album_tour" => $album_tour,
+    //         "tour_except" => $tour_except,
+    //         "tour_info_contact" => $tour_info_contact,
+    //         "tour_keywords" => $tour_keywords,
+    //         "tour_description" => $tour_description,
+    //         "tour_schedule" => $tour_schedule,
+    //         "tour_slug" => $tour_slug,
+    //         "created_at" => date('Y-m-d H:i:s'),
+    //     );
+    //     $this->db->query('ALTER TABLE `tours` AUTO_INCREMENT=1');
+    //     if($this->db->insert("tours", $data))
+    //     {
+    //         //print_r($this->db->last_query());
+    //         return true;
+    //     }
+    //     //print_r($this->db->last_query());
+    //     return false;
+    // }
 
-    public function update_tour($tour_id,$tour_title,$category_tour_id,$tour_from,$tour_destination,$tour_duration,$tour_price,$tour_saving_price,$tour_thumnail,$album_tour,$tour_except,$tour_info_contact,$tour_keywords,$tour_description,$tour_schedule,$tour_status)
-    {
-        $data=array(
-            "tour_name" => $tour_title,
-            "category_tour_id" => $category_tour_id,
-            "tour_from" => $tour_from,
-            "tour_destination" => $tour_destination,
-            "tour_duration" => $tour_duration,
-            "tour_price" => $tour_price,
-            "tour_saving_price" => $tour_saving_price,
-            "tour_thumnail" => $tour_thumnail,
-            "album_tour" => $album_tour,
-            "tour_except" => $tour_except,
-            "tour_info_contact" => $tour_info_contact,
-            "tour_keywords" => $tour_keywords,
-            "tour_description" => $tour_description,
-            "tour_schedule" => $tour_schedule,
-            "updated_at" => date('Y-m-d H:i:s'),
-            "tour_status" => $tour_status,
-        );
-        $this->db->where('tour_id', $tour_id);
-        if($this->db->update("tours", $data))
-        {
-            return true;
-        }
-        return false;
-    }
+    // public function update_tour($tour_id,$tour_title,$category_tour_id,$tour_from,$tour_destination,$tour_duration,$tour_price,$tour_saving_price,$tour_thumnail,$album_tour,$tour_except,$tour_info_contact,$tour_keywords,$tour_description,$tour_schedule,$tour_status)
+    // {
+    //     $data=array(
+    //         "tour_name" => $tour_title,
+    //         "category_tour_id" => $category_tour_id,
+    //         "tour_from" => $tour_from,
+    //         "tour_destination" => $tour_destination,
+    //         "tour_duration" => $tour_duration,
+    //         "tour_price" => $tour_price,
+    //         "tour_saving_price" => $tour_saving_price,
+    //         "tour_thumnail" => $tour_thumnail,
+    //         "album_tour" => $album_tour,
+    //         "tour_except" => $tour_except,
+    //         "tour_info_contact" => $tour_info_contact,
+    //         "tour_keywords" => $tour_keywords,
+    //         "tour_description" => $tour_description,
+    //         "tour_schedule" => $tour_schedule,
+    //         "updated_at" => date('Y-m-d H:i:s'),
+    //         "tour_status" => $tour_status,
+    //     );
+    //     $this->db->where('tour_id', $tour_id);
+    //     if($this->db->update("tours", $data))
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
-    public function update_tour_no_images($tour_id,$tour_title,$category_tour_id,$tour_from,$tour_destination,$tour_duration,$tour_price,$tour_saving_price,$tour_except,$tour_info_contact,$tour_keywords,$tour_description,$tour_schedule,$tour_status)
-    {
-        $data=array(
-            "tour_name" => $tour_title,
-            "category_tour_id" => $category_tour_id,
-            "tour_from" => $tour_from,
-            "tour_destination" => $tour_destination,
-            "tour_duration" => $tour_duration,
-            "tour_price" => $tour_price,
-            "tour_saving_price" => $tour_saving_price,
-            "tour_except" => $tour_except,
-            "tour_info_contact" => $tour_info_contact,
-            "tour_keywords" => $tour_keywords,
-            "tour_description" => $tour_description,
-            "tour_schedule" => $tour_schedule,
-            "updated_at" => date('Y-m-d H:i:s'),
-            "tour_status" => $tour_status,
-        );
-        $this->db->where('tour_id', $tour_id);
-        if($this->db->update("tours", $data))
-        {
-            return true;
-        }
-        return false;
-    }
+    // public function update_tour_no_images($tour_id,$tour_title,$category_tour_id,$tour_from,$tour_destination,$tour_duration,$tour_price,$tour_saving_price,$tour_except,$tour_info_contact,$tour_keywords,$tour_description,$tour_schedule,$tour_status)
+    // {
+    //     $data=array(
+    //         "tour_name" => $tour_title,
+    //         "category_tour_id" => $category_tour_id,
+    //         "tour_from" => $tour_from,
+    //         "tour_destination" => $tour_destination,
+    //         "tour_duration" => $tour_duration,
+    //         "tour_price" => $tour_price,
+    //         "tour_saving_price" => $tour_saving_price,
+    //         "tour_except" => $tour_except,
+    //         "tour_info_contact" => $tour_info_contact,
+    //         "tour_keywords" => $tour_keywords,
+    //         "tour_description" => $tour_description,
+    //         "tour_schedule" => $tour_schedule,
+    //         "updated_at" => date('Y-m-d H:i:s'),
+    //         "tour_status" => $tour_status,
+    //     );
+    //     $this->db->where('tour_id', $tour_id);
+    //     if($this->db->update("tours", $data))
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
-    public function update_tour_no_thumnail($tour_id,$tour_title,$category_tour_id,$tour_from,$tour_destination,$tour_duration,$tour_price,$tour_saving_price,$album_tour,$tour_except,$tour_info_contact,$tour_keywords,$tour_description,$tour_schedule,$tour_status)
-    {
-        $data=array(
-            "tour_name" => $tour_title,
-            "category_tour_id" => $category_tour_id,
-            "tour_from" => $tour_from,
-            "tour_destination" => $tour_destination,
-            "tour_duration" => $tour_duration,
-            "tour_price" => $tour_price,
-            "album_tour" => $album_tour,
-            "tour_saving_price" => $tour_saving_price,
-            "tour_except" => $tour_except,
-            "tour_info_contact" => $tour_info_contact,
-            "tour_keywords" => $tour_keywords,
-            "tour_description" => $tour_description,
-            "tour_schedule" => $tour_schedule,
-            "updated_at" => date('Y-m-d H:i:s'),
-            "tour_status" => $tour_status,
-        );
-        $this->db->where('tour_id', $tour_id);
-        if($this->db->update("tours", $data))
-        {
-            return true;
-        }
-        return false;
-    }
+    // public function update_tour_no_thumnail($tour_id,$tour_title,$category_tour_id,$tour_from,$tour_destination,$tour_duration,$tour_price,$tour_saving_price,$album_tour,$tour_except,$tour_info_contact,$tour_keywords,$tour_description,$tour_schedule,$tour_status)
+    // {
+    //     $data=array(
+    //         "tour_name" => $tour_title,
+    //         "category_tour_id" => $category_tour_id,
+    //         "tour_from" => $tour_from,
+    //         "tour_destination" => $tour_destination,
+    //         "tour_duration" => $tour_duration,
+    //         "tour_price" => $tour_price,
+    //         "album_tour" => $album_tour,
+    //         "tour_saving_price" => $tour_saving_price,
+    //         "tour_except" => $tour_except,
+    //         "tour_info_contact" => $tour_info_contact,
+    //         "tour_keywords" => $tour_keywords,
+    //         "tour_description" => $tour_description,
+    //         "tour_schedule" => $tour_schedule,
+    //         "updated_at" => date('Y-m-d H:i:s'),
+    //         "tour_status" => $tour_status,
+    //     );
+    //     $this->db->where('tour_id', $tour_id);
+    //     if($this->db->update("tours", $data))
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
-    public function update_tour_no_album($tour_id,$tour_title,$category_tour_id,$tour_from,$tour_destination,$tour_duration,$tour_price,$tour_saving_price,$tour_thumnail,$tour_except,$tour_info_contact,$tour_keywords,$tour_description,$tour_schedule,$tour_status)
-    {
-        $data=array(
-            "tour_name" => $tour_title,
-            "category_tour_id" => $category_tour_id,
-            "tour_from" => $tour_from,
-            "tour_destination" => $tour_destination,
-            "tour_duration" => $tour_duration,
-            "tour_price" => $tour_price,
-            "tour_thumnail" => $tour_thumnail,
-            "tour_saving_price" => $tour_saving_price,
-            "tour_except" => $tour_except,
-            "tour_info_contact" => $tour_info_contact,
-            "tour_keywords" => $tour_keywords,
-            "tour_description" => $tour_description,
-            "tour_schedule" => $tour_schedule,
-            "updated_at" => date('Y-m-d H:i:s'),
-            "tour_status" => $tour_status,
-        );
-        $this->db->where('tour_id', $tour_id);
-        if($this->db->update("tours", $data))
-        {
-            return true;
-        }
-        return false;
-    }
+    // public function update_tour_no_album($tour_id,$tour_title,$category_tour_id,$tour_from,$tour_destination,$tour_duration,$tour_price,$tour_saving_price,$tour_thumnail,$tour_except,$tour_info_contact,$tour_keywords,$tour_description,$tour_schedule,$tour_status)
+    // {
+    //     $data=array(
+    //         "tour_name" => $tour_title,
+    //         "category_tour_id" => $category_tour_id,
+    //         "tour_from" => $tour_from,
+    //         "tour_destination" => $tour_destination,
+    //         "tour_duration" => $tour_duration,
+    //         "tour_price" => $tour_price,
+    //         "tour_thumnail" => $tour_thumnail,
+    //         "tour_saving_price" => $tour_saving_price,
+    //         "tour_except" => $tour_except,
+    //         "tour_info_contact" => $tour_info_contact,
+    //         "tour_keywords" => $tour_keywords,
+    //         "tour_description" => $tour_description,
+    //         "tour_schedule" => $tour_schedule,
+    //         "updated_at" => date('Y-m-d H:i:s'),
+    //         "tour_status" => $tour_status,
+    //     );
+    //     $this->db->where('tour_id', $tour_id);
+    //     if($this->db->update("tours", $data))
+    //     {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 
-    public function add_category($cate_name,$cate_slug)
-    {
-        $data=array(
-            "cate_name" => $cate_name,
-            "cate_slug" => $cate_slug,
-            "created_at" => date('Y-m-d H:i:s'),
-        );
-        if(!$this->check_cate_slug($cate_slug)){
-            $this->db->query('ALTER TABLE `category_tour` AUTO_INCREMENT=1');
-            if($this->db->insert("category_tour", $data))
-            {
-                return true;
-            }
-        }
-		return false;
-    }
+    // public function add_category($cate_name,$cate_slug)
+    // {
+    //     $data=array(
+    //         "cate_name" => $cate_name,
+    //         "cate_slug" => $cate_slug,
+    //         "created_at" => date('Y-m-d H:i:s'),
+    //     );
+    //     if(!$this->check_cate_slug($cate_slug)){
+    //         $this->db->query('ALTER TABLE `category_tour` AUTO_INCREMENT=1');
+    //         if($this->db->insert("category_tour", $data))
+    //         {
+    //             return true;
+    //         }
+    //     }
+	// 	return false;
+    // }
 
-    public function del_tour($tour_id)
-    {
-        $data=array(
-            "tour_id" => $tour_id,
-        );
-        if($this->db->delete("tours", $data))
-        {
-            return true;
-        }
+    // public function del_tour($tour_id)
+    // {
+    //     $data=array(
+    //         "tour_id" => $tour_id,
+    //     );
+    //     if($this->db->delete("tours", $data))
+    //     {
+    //         return true;
+    //     }
         
-		return false;
-    }
+	// 	return false;
+    // }
 
-    public function del_category($cate_id)
-    {
-        $data=array(
-            "cate_id" => $cate_id,
-        );
-        if($this->db->delete("category_tour", $data))
-        {
-            return true;
-        }
+    // public function del_category($cate_id)
+    // {
+    //     $data=array(
+    //         "cate_id" => $cate_id,
+    //     );
+    //     if($this->db->delete("category_tour", $data))
+    //     {
+    //         return true;
+    //     }
         
-		return false;
-    }
+	// 	return false;
+    // }
 
-    public function edit_category($cate_id,$cate_name,$cate_slug)
-    {
-        $data=array(
-            "cate_name" => $cate_name,
-            "cate_slug" => $cate_slug,
-            "updated_at" => date('Y-m-d H:i:s'),
-        );
-        if(!$this->check_cate_slug($cate_slug,$cate_id)){
-            $this->db->where('cate_id', $cate_id);
-            if($this->db->update("category_tour", $data))
-            {
-                return true;
-            }
-        }
-		return false;
-    }
+    // public function edit_category($cate_id,$cate_name,$cate_slug)
+    // {
+    //     $data=array(
+    //         "cate_name" => $cate_name,
+    //         "cate_slug" => $cate_slug,
+    //         "updated_at" => date('Y-m-d H:i:s'),
+    //     );
+    //     if(!$this->check_cate_slug($cate_slug,$cate_id)){
+    //         $this->db->where('cate_id', $cate_id);
+    //         if($this->db->update("category_tour", $data))
+    //         {
+    //             return true;
+    //         }
+    //     }
+	// 	return false;
+    // }
 }
