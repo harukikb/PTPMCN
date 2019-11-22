@@ -6747,3 +6747,7 @@ only screen and (min-device-pixel-ratio: 2) and (max-width: 991px) {
 .check_person{
 	padding-top: 20px !important;
 }
+
+.col-lg-9{
+	text-align: justify;
+}

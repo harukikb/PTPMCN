@@ -79,11 +79,7 @@
 							<h3>Lịch trình</h3>
 						</div>
 						<div class="col-lg-9">
-						<?php 
-						if($info_tour->start_date!=NULL){
-							$start_date = new DateTime($info_tour->start_date);
-							echo '<h4>Xuất phát: '.$start_date->format('d/m/Y').'</h4>';
-						}  ?>
+						
 						<?php echo $info_tour->tour_schedule;?>
 						</div>
 					</div>
