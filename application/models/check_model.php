@@ -9,4 +9,10 @@ class Check_model extends CI_Model
         //trả kết quả về dạng mảng
         return $result->result();
     }
+
+    public function number_adult($keyword){
+        $this->db->where('booking_code',$keyword);
+        $result = $this->db->get("booking_tour");
+        return $result->row();
+    }
 }
