@@ -1,4 +1,4 @@
-    <?php
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tour extends CI_Controller {
@@ -53,7 +53,8 @@ class Tour extends CI_Controller {
         //tổng số lượng tour
         $all_tour=$this->tours_model->all_tour();
         $this->data['all_tour']=$all_tour;
-
+        // echo CI_VERSION;
+        // echo 'Current PHP version: ' . phpversion();
 
         // $key=$this->input->get('q');
         // $this->data['keysearch']=$key;
@@ -309,4 +310,6 @@ class Tour extends CI_Controller {
         $code=$return_str.$timeStamp;
         return $code;
     } 
+    
+    
 }
