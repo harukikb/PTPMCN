@@ -17,19 +17,8 @@ class Tour extends CI_Controller {
 	public function index()
 	{
         $this -> data['title'] = "Booking Tour";
-        //Set style display of list tour
-        //1: list tour
-        //2: grid tour
-        $view_style=1;
-        $view=$this->input->get('view');
-        if($view !==NULL){
-            $view_style=$this->input->get('view');
-        }
-        if($view_style==1)
-            $this -> data['temp'] = "default/tour/tour";
-        else{
-            $this -> data['temp'] = "default/tour/tour-grid";
-        }
+        
+        $this -> data['temp'] = "default/tour/tour";
 
 
         $this -> data['after_header'] = "default/tour/slide"; 
@@ -53,13 +42,6 @@ class Tour extends CI_Controller {
         //tổng số lượng tour
         $all_tour=$this->tours_model->all_tour();
         $this->data['all_tour']=$all_tour;
-        // echo CI_VERSION;
-        // echo 'Current PHP version: ' . phpversion();
-
-        // $key=$this->input->get('q');
-        // $this->data['keysearch']=$key;
-        // $data_tour=$this->tours_model->search_icon($key);
-        // $this->data['data_tour']=$data_tour;
 
         //load master page
         $this->load->view("default/template",$this ->data);
