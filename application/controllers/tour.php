@@ -17,19 +17,8 @@ class Tour extends CI_Controller {
 	public function index()
 	{
         $this -> data['title'] = "Booking Tour";
-        //Set style display of list tour
-        //1: list tour
-        //2: grid tour
-        $view_style=1;
-        $view=$this->input->get('view');
-        if($view !==NULL){
-            $view_style=$this->input->get('view');
-        }
-        if($view_style==1)
-            $this -> data['temp'] = "default/tour/tour";
-        else{
-            $this -> data['temp'] = "default/tour/tour-grid";
-        }
+        
+        $this -> data['temp'] = "default/tour/tour";
 
 
         $this -> data['after_header'] = "default/tour/slide"; 
@@ -53,13 +42,6 @@ class Tour extends CI_Controller {
         //tổng số lượng tour
         $all_tour=$this->tours_model->all_tour();
         $this->data['all_tour']=$all_tour;
-        // echo CI_VERSION;
-        // echo 'Current PHP version: ' . phpversion();
-
-        // $key=$this->input->get('q');
-        // $this->data['keysearch']=$key;
-        // $data_tour=$this->tours_model->search_icon($key);
-        // $this->data['data_tour']=$data_tour;
 
         //load master page
         $this->load->view("default/template",$this ->data);
@@ -290,7 +272,13 @@ class Tour extends CI_Controller {
                 $result['status'] = 0;
                 $result['message']='<div class="error_message"><span class="icon_dislike" aria-hidden="true"></span> Có lỗi xảy ra, vui lòng thử lại sau!.</div>';
             }else{
-                $result['status'] = 1;
+                if($email !=null ) {
+                    if ($this->send_mail($email, $booking_code,$name, $phone)) {
+                        $result['status'] = 1;
+                    } else $result['status'] = 0;
+                }
+                
+                //$result['status'] = 1;
                 $result['id']=$booking_code;
             }
         }
@@ -298,8 +286,48 @@ class Tour extends CI_Controller {
         echo json_encode($result);
     }
 
+    private function send_mail($to_email, $booking_code, $name, $phone) {
+        $this->load->library('email');
+        $config = array();
+        $localhosts = array(
+            '::1',
+            '127.0.0.1',
+            'localhost'
+        );
+        
+        $protocol = 'mail';
+        if (in_array($_SERVER['REMOTE_ADDR'], $localhosts)) {
+            $protocol = 'smtp';
+        }
+        $config['protocol'] = $protocol;
+        $config['smtp_host'] = 'ssl://smtp.googlemail.com';
+        $config['smtp_user'] = 'truonglongsometimes2297@gmail.com';
+        $config['smtp_pass'] = 'wqbhsrpipqzpuxeb';
+        $config['smtp_port'] = 465;
+        $config['mailtype'] = 'html';
+        $this->email->initialize($config);
+        $this->email->set_newline("\r\n");
+        $from_email = "truonglongsometimes2297@gmail.com";
+        //Load email library
+        
+        $this->email->from($from_email, 'Booking Tour Successfull');
+        $this->email->to($to_email);
+        $this->email->subject('Send Email Code Booking Tour');
+        $this->email->message('The email send from Booking System
+                                <h3>Thank you to booking tour from our Booking System</h3>
+                                <p>Your Booking Code: <strong>'.$booking_code.'</strong></p>
+                                <p>Your Name: '.$name.'</p>
+                                <p>Your Phone: '.$phone.'</p>
+                                <p>You can use it to check details of tour orders in <a href="http://localhost:8080/PTPMCN/check" target="_blank">Check</a>. </p>');
+        //Send mail
+        if($this->email->send())
+            return true;
+        else
+            return false;
+    }
+
     public function random_number($maxlength = 10) {
-        $chary = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q"          , "r", "s", "t", "u", "v", "w", "x", "y", "z",
+        $chary = array("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
                         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
                         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
         $return_str = "";

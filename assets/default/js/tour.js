@@ -125,13 +125,9 @@ async function get_list_tours_key(keysearch,page) {
 	
 	let url = base_url+"/tour/get_list_tour_key";
     let success = function(responce) {
-		let json_data = $.parseJSON(responce);
-		if(get_parameter('view')==2){
-			show_list_tours_grid(json_data);
-		}else{
-			show_list_tours(json_data);
-			
-		}
+	let json_data = $.parseJSON(responce);
+	show_list_tours(json_data);
+
         
     };
     try {
@@ -196,12 +192,7 @@ async function get_list_tours(data) {
 	let url = base_url+"/tour/get_list_tour";
     let success = function(responce) {
 		let json_data = $.parseJSON(responce);
-		if(get_parameter('view')==2){
-			show_list_tours_grid(json_data);
-		}else{
-			show_list_tours(json_data);
-			
-		}
+		show_list_tours(json_data);
         
     };
     try {
