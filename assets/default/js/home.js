@@ -149,11 +149,6 @@ $(function() {
                   vote+='<i class="icon-smile"></i>';
               }
               tour_title.append('<div class="rating">'+vote+'<small>('+data[3*i+j].num_rev+')</small></div>');
-              tour_title.append('<div class="wishlist">'+
-                          '<a class="tooltip_flip tooltip-effect-1" href="#">+<span class="tooltip-content-flip">'+
-                          '<span class="tooltip-back">Add to wishlist</span>'+
-                          '</span></a>'+
-                        '</div>');
               container.append(tour_title);
               col_4.append(container);
               row.append(col_4);

@@ -22,23 +22,7 @@
                     </ul>
                 </div>
                 <div class="col-md-2">
-                    <h3>Cài Đặt</h3>
-                    <div class="styled-select">
-                        <select name="lang" id="lang">
-                            <option value="VietNamese" selected>Tiếng Việt</option>
-                           <!-- <option value="French">French</option>
-                            <option value="Spanish">Spanish</option>
-                            <option value="Russian">Russian</option>-->
-                        </select>
-                    </div>
-                    <div class="styled-select">
-                        <select name="currency" id="currency">
-                            <option value="VNĐ" selected>VNĐ</option>
-                            <!--<option value="EUR">EUR</option>
-                            <option value="GBP">GBP</option>
-                            <option value="RUB">RUB</option>-->
-                        </select>
-                    </div>
+                    <h3>Fan Page</h3>
                 </div>
             </div><!-- End row -->
             <div class="row">

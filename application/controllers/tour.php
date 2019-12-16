@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tour extends CI_Controller {
     var $data = array();
-    var $page_size=1;
+    var $page_size=3;
     public function __construct(){
         parent::__construct();  
         $this->load->library("cart");
