@@ -24,7 +24,7 @@ class TestUnit extends CI_Controller {
 
     public function test_gettourbyslug(){
         $this->load->model('tours_model');
-        $b=$this->tours_model->get_tour_info_by_slug('da-lat');
+        $b=$this->tours_model->get_tour_info_by_slug('bf');
         $c=$b->tour_name;
         return $c;
     }
@@ -62,7 +62,7 @@ class TestUnit extends CI_Controller {
         echo $this->unit->run($test3,$expected3,$text_name3);
 
         $test4= $this->test_gettourbyslug();
-        $expected4="Đà Lạt";
+        $expected4="Đà Nẵng";
         $text_name4="test get tour by slug";
         echo $this->unit->run($test4,$expected4,$text_name4);
         
