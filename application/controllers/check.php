@@ -46,15 +46,8 @@ class Check extends CI_Controller {
     public function check_booking(){
         $this->load->model("check_model");
         $keyword=$this->input->post('keyword',true);
-        $arr=$this->check_model->check_booking($keyword);
-        $arr['total_record']=count($arr);
-
-        $number_per=$this->check_model->number_adult($keyword);
-        $number_adult=$number_per->booking_num_adult;
-        $number_children=$number_per->booking_num_children;
-        $number_child=$number_per->booking_num_child;
-        $total_num=$number_adult+$number_children+$number_child;
-        $arr['number_per']=$total_num;
+        $arr['result']=$this->check_model->check_booking($keyword);
+        $arr['total_record']=count($arr['result']);
         echo json_encode($arr);
         
     }
