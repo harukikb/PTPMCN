@@ -28,7 +28,6 @@ $(document).ready(function ($) {
                                             'Mã đơn đặt tour không tồn tại.'+
                                         '</div>');
             }
-        
         };
         try {
             result = await $.post(url, data, success);
@@ -45,24 +44,25 @@ $(document).ready(function ($) {
             let col12=$('<aside class="col-lg-12" id="sidebar"></aside>');
             let theiaStickySidebar=$('<div class="theiaStickySidebar"></div>');
             let box_style_1=$('<div class="box_style_1 expose" id="booking_box"></div>');
-            box_style_1.append('<h3 class="inner">Mã đơn đặt:  '+data[i].booking_code +'</h3>');
+            box_style_1.append('<h3 class="inner">Mã đơn đặt:  '+data['result'][i].booking_code +'</h3>');
             box_style_1.append('<br>');
             let table=$('<table class="table table_summary"></table>');
             let tbody=$('<tbody class="text-center"><div>');
             let status="";
-            if(data[i].booking_status==1){
+            if(data['result'][i].booking_status==1){
                 status="Sắp tới";
             } else {
-                        if(data[i].booking_status==2) {status="Hoàn thành"}
+                        if(data['result'][i].booking_status==2) {status="Hoàn thành"}
                         else status="Hủy"
                     }
-            //let number_per=data[i].booking_num_adult+data[i].booking_num_children+data[i].booking_num_child;
-            tbody.append('<tr><td class="check_table check_person">Người đặt</td><td>'+data[i].cus_name+'<br>'+data[i].cus_phone+'</td></tr>');
-            tbody.append('<tr><td class="check_table">Tour</td><td><a href="'+base_url+'/tour/detail/'+data[i].tour_slug+'">'+data[i].tour_name+'</td></tr>');
+            
+            let number_person=parseInt(data['result'][i].booking_num_adult)+parseInt(data['result'][i].booking_num_children)+parseInt(data['result'][i].booking_num_child);
+            tbody.append('<tr><td class="check_table check_person">Người đặt</td><td>'+data['result'][i].cus_name+'<br>'+data['result'][i].cus_phone+'</td></tr>');
+            tbody.append('<tr><td class="check_table">Tour</td><td><a href="'+base_url+'/tour/detail/'+data['result'][i].tour_slug+'">'+data['result'][i].tour_name+'</td></tr>');
             tbody.append('<tr><td class="check_table">Trạng thái</td><td>'+status+'</td></tr>');
-            tbody.append('<tr><td class="check_table">Thời gian bắt đầu</td><td>'+data[i].booking_start_date+'</td></tr>');
-            tbody.append('<tr><td class="check_table">Số người</td><td>'+data['number_per']+'</td></tr>');
-            let total=format_curency(data[i].booking_price);
+            tbody.append('<tr><td class="check_table">Thời gian bắt đầu</td><td>'+data['result'][i].booking_start_date+'</td></tr>');
+            tbody.append('<tr><td class="check_table">Số người</td><td>'+number_person+'</td></tr>');
+            let total=format_curency(data['result'][i].booking_price);
             tbody.append('<tr><td class="check_table">Tổng tiền</td><td>'+total+' VNĐ </td></tr>');
             table.append(tbody);
             box_style_1.append(table);
