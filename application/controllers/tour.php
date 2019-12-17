@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tour extends CI_Controller {
     var $data = array();
-    var $page_size=1;
+    var $page_size=3;
     public function __construct(){
         parent::__construct();  
         $this->load->library("cart");
@@ -318,7 +318,7 @@ class Tour extends CI_Controller {
                                 <p>Your Booking Code: <strong>'.$booking_code.'</strong></p>
                                 <p>Your Name: '.$name.'</p>
                                 <p>Your Phone: '.$phone.'</p>
-                                <p>You can use it to check details of tour orders in <a href="http://localhost:8080/PTPMCN/check" target="_blank">Check</a>. </p>');
+                                <p>You can use it to check details of tour orders in <a href="http://localhost:8080/Bookingtour/check" target="_blank">Check</a>. </p>');
         //Send mail
         if($this->email->send())
             return true;

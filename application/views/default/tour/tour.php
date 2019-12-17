@@ -90,9 +90,9 @@
 					<!--End filters col-->
 					<div class="box_style_2">
 						<i class="icon_set_1_icon-57"></i>
-						<h4>Need <span>Help?</span></h4>
-						<a href="tel://004542344599" class="phone">+45 423 445 99</a>
-						<small>Monday to Friday 9.00am - 7.30pm</small>
+						<h4>Bạn cần <span>hỗ trợ?</span></h4>
+						<a href="tel://00399002999" class="phone">0399002999</a>
+						<small>Thời gian hoạt động từ thứ 2 đến thứ 6 (9.00am - 7.30pm)</small>
 					</div>
 				</aside>
 				<!--End aside -->
@@ -110,7 +110,7 @@
 							</div>
 						</div>
 						<div class="col-md-6 col-sm-6 d-none d-sm-block text-right">
-							<a href="?view=2" class="bt_filters"><i class="icon-th"></i></a> <a href="?view=1" class="bt_filters"><i class=" icon-list"></i></a>
+							<a href="?view=1" class="bt_filters"><i class=" icon-list"></i></a>
 						</div>
 
 					</div>

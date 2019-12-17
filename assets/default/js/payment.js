@@ -15,6 +15,9 @@ $('input').iCheck({
 $(document).ready(function ($) {
 	$('.btn_checkout').on('click',function(e){
 		e.preventDefault();
+		//$("#loading").show();
+		var x = document.getElementById("loading");
+        x.style.display = 'block';
 		$('#error-message').empty();
 		let tour_id  = $('#tour_id').val();
 		let tour_name  = $('#tour_name').val();
@@ -61,6 +64,7 @@ $(document).ready(function ($) {
 			address:address
 			};
 			submit_checkout_form(data);
+			//$("#loading").hide();
 		}
 	});
 });
@@ -78,6 +82,7 @@ async function submit_checkout_form(data){
     let success = function(responce) {
 		let json_data = $.parseJSON(responce);
 		if(json_data['status']){
+			$('#loading').hide();
 			window.location.href = base_url+"/tour/confirmation?bookingnumber="+json_data['id'];
 		}	
 		else
