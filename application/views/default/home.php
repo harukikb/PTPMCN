@@ -16,7 +16,7 @@
       <hr>
 
       <p class="text-center add_bottom_30">
-        <a href="tour" class="btn_1 medium"><i class="icon-eye-7"></i>Xem tất cả cách tour </a>
+        <a href="tour" class="btn_1 medium"><i class="icon-eye-7"></i>Xem tất cả các tour </a>
       </p>
       
     </div>
