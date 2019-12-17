@@ -1,6 +1,6 @@
 <section id="hero_2">
 		<div class="intro_title">
-			<h1>Đặt hàng</h1>
+			<h1>Đặt tour</h1>
 			<div class="bs-wizard row">
 
 				<div class="col-4 bs-wizard-step complete">
@@ -16,7 +16,7 @@
 					<div class="progress">
 						<div class="progress-bar"></div>
 					</div>
-					<a href="<?php echo base_url();?>tour/payment" class="bs-wizard-dot"></a>
+					<a href="#" class="bs-wizard-dot"></a>
 				</div>
 
 				<div class="col-4 bs-wizard-step complete">

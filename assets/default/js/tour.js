@@ -226,10 +226,6 @@ function show_list_tours(data) {
 			}
 			
 
-			col4.append('<div class="wishlist">'+
-				'<a class="tooltip_flip tooltip-effect-1" href="javascript:void(0);">+<span class="tooltip-content-flip">'+
-				'<span class="tooltip-back">Add to wishlist</span>'+
-				'</span></a></div>');
 			let start_date="Hàng ngày";
 			if(data[i].start_date!=null){
 				start_date=data[i].start_date;

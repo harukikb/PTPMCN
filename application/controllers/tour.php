@@ -318,7 +318,7 @@ class Tour extends CI_Controller {
                                 <p>Your Booking Code: <strong>'.$booking_code.'</strong></p>
                                 <p>Your Name: '.$name.'</p>
                                 <p>Your Phone: '.$phone.'</p>
-                                <p>You can use it to check details of tour orders in <a href="http://localhost:8080/PTPMCN/check" target="_blank">Check</a>. </p>');
+                                <p>You can use it to check details of tour orders in <a href="http://localhost:8080/Bookingtour/check" target="_blank">Check</a>. </p>');
         //Send mail
         if($this->email->send())
             return true;

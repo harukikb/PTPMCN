@@ -24,7 +24,7 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
 |
 */
 
-$config['base_url'] = 'http://localhost:8080/PTPMCN/';
+$config['base_url'] = 'http://localhost:8080/Bookingtour/';
 
 
 

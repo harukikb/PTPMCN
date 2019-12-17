@@ -62,7 +62,10 @@
 						</div>
 						<div id="error-message">
 						</div>
-						<a href="<?php echo base_url(); ?>tour/confirmation" class="btn_checkout btn_1 green medium">Đặt tour</a>
+						<div style="display: inline-block;">
+							<span><a href="<?php echo base_url(); ?>tour/confirmation" class="btn_checkout btn_1 green medium" >Đặt tour</a></span>
+							<span id="loading"><img src="<?php echo base_url(); ?>assets/default/img/iconloading.gif" style=" height: 20px; width: 20px;" placeholder="Loading..."></span>
+						</div>
 					</div>
 				</div>
 
@@ -122,3 +125,9 @@
 		<!--End container -->
 	</main>
 	<!-- End main -->
+	<script type="text/javascript">
+		var x = document.getElementById("loading");
+		window.onload = function() {
+   			x.style.display = 'none';
+		}
+	</script>
