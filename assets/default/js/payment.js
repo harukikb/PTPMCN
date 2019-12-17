@@ -17,7 +17,7 @@ $(document).ready(function ($) {
 		e.preventDefault();
 		//$("#loading").show();
 		var x = document.getElementById("loading");
-        x.style.display = 'block';
+        x.style.display = 'inline-block';
 		$('#error-message').empty();
 		let tour_id  = $('#tour_id').val();
 		let tour_name  = $('#tour_name').val();
